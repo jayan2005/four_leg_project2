@@ -25,6 +25,7 @@ public class ServerCommandProcessorFactory {
 		processors.put(Names.ACTIVITY_BROADCAST.toString(), new ActivityBroadcastCommandProcessor());
 
 		processors.put(Names.AUTHENTICATE.toString(), new AuthenticateCommandProcessor());
+		processors.put(Names.AUTHENTICATION_SUCCESS.toString(), new AuthenticationSuccessCommandProcessor());
 		processors.put(Names.AUTHENTICATION_FAIL.toString(), new AuthenticationFailCommandProcessor());
 
 		processors.put(Names.SERVER_ANNOUNCE.toString(), new ServerAnnounceCommandProcessor());

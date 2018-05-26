@@ -23,7 +23,7 @@ public class ServerAnnounceCommandProcessor extends AbstractServerCommandProcess
 		ServerInfo serverInfo = serverInfoServiceImpl.getServerInfo(command.getId());
 
 		if (serverInfo == null) { // Register the server
-			serverInfoServiceImpl.addServerInfo(command.getId(), command.getHostname(), command.getPort(),
+			serverInfoServiceImpl.addServerInfo(command.getId(), command.getSecret(),command.getHostname(), command.getPort(),
 					command.getLoad());
 		} else { // Update the server
 			serverInfoServiceImpl.udpateServerLoad(command.getId(), command.getLoad());

@@ -1,15 +1,15 @@
 package activitystreamer.server;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ServerInfoServiceImpl implements ServerInfoService {
 
 	private static ServerInfoServiceImpl instance;
-	private static ArrayList<ServerInfo> servers;
+	private static Set<ServerInfo> servers;
 
 	private ServerInfoServiceImpl() {
-		servers = new ArrayList<ServerInfo>();
+		servers = new HashSet<ServerInfo>();
 	}
 
 	public static ServerInfoServiceImpl getInstance() {
@@ -38,19 +38,25 @@ public class ServerInfoServiceImpl implements ServerInfoService {
 	}
 
 	@Override
-	public ServerInfo addServerInfo(String id, String hostname, int port, int load) {
+	public ServerInfo addServerInfo(String id, String secret, String hostname, int port, int load) {
 		ServerInfo serverInfo = new ServerInfo();
 		serverInfo.setId(id);
 		serverInfo.setLoad(load);
 		serverInfo.setHostname(hostname);
 		serverInfo.setPort(port);
+		serverInfo.setSecret(secret);
 
 		servers.add(serverInfo);
 		return serverInfo;
 	}
+	
+	@Override
+	public void addServerInfo(ServerInfo aServerInfo) {
+		servers.add(aServerInfo);
+	}
 
 	@Override
-	public List<ServerInfo> getAllServersInfo() {
+	public Set<ServerInfo> getAllServersInfo() {
 		return servers;
 	}
 }

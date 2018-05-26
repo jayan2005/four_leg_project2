@@ -6,6 +6,7 @@ public class ServerInfo {
 	private String hostname;
 	private int port;
 	private int load;
+	private String secret;
 
 	public String getId() {
 		return id;
@@ -38,5 +39,14 @@ public class ServerInfo {
 	public void setLoad(int load) {
 		this.load = load;
 	}
+
+	public String getSecret() {
+		return secret;
+	}
+
+	public void setSecret(String secret) {
+		this.secret = secret;
+	}
+	
 
 }

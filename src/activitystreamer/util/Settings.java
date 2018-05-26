@@ -3,9 +3,11 @@ package activitystreamer.util;
 import java.math.BigInteger;
 import java.net.Socket;
 import java.security.SecureRandom;
+import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.pattern.UuidPatternConverter;
 
 public class Settings {
 
@@ -19,6 +21,7 @@ public class Settings {
 	private static String secret = null;
 	private static String username = "anonymous";
 	private static boolean connectionRedirect;
+	private static String selfId;
 	private static String selfSecret;
 
 	public static int getLocalPort() {
@@ -96,6 +99,10 @@ public class Settings {
 	public static String nextSecret() {
 		return new BigInteger(130, random).toString(32);
 	}
+	
+	private static String generateSelfId() {
+		return UUID.randomUUID().toString();
+	}
 
 	public static boolean isConnectionRedirect() {
 		return connectionRedirect;
@@ -111,6 +118,13 @@ public class Settings {
 
 	public static void setSelfSecret(String selfSecret) {
 		Settings.selfSecret = selfSecret;
+	}
+
+	public static String getSelfId() {
+		if (selfId == null) {
+			selfId = generateSelfId();
+		}
+		return selfId;
 	}
 
 }

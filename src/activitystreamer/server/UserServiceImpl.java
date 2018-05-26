@@ -1,7 +1,9 @@
 package activitystreamer.server;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class UserServiceImpl implements UserService {
 
@@ -51,6 +53,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUser(String username) {
 		return users.get(username);
+	}
+
+	@Override
+	public Set<User> getAllUsers() {
+		Set<User> users = new HashSet<User>(); 
+		users.addAll(this.users.values());
+		return users;
 	}
 
 }

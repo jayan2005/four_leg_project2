@@ -1,15 +1,17 @@
 package activitystreamer.server;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ServerInfoService {
 
-	List<ServerInfo> getAllServersInfo();
+	Set<ServerInfo> getAllServersInfo();
 
 	ServerInfo getServerInfo(String id);
 
 	void udpateServerLoad(String id, int load);
 
-	ServerInfo addServerInfo(String id, String hostname, int port, int load);
+	ServerInfo addServerInfo(String id, String hostname, String secret, int port, int load);
+	
+	void addServerInfo(ServerInfo aServerInfo);
 
 }

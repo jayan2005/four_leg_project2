@@ -1,8 +1,15 @@
 package activitystreamer.server.commands.processors.impl;
 
+import java.util.Set;
+
 import activitystreamer.command.Command;
 import activitystreamer.commands.AuthenticateCommand;
+import activitystreamer.commands.AuthenticationSuccessCommand;
 import activitystreamer.server.Connection;
+import activitystreamer.server.ServerInfo;
+import activitystreamer.server.ServerInfoServiceImpl;
+import activitystreamer.server.User;
+import activitystreamer.server.UserServiceImpl;
 import activitystreamer.util.Settings;
 
 public class AuthenticateCommandProcessor extends AbstractServerCommandProcessor<AuthenticateCommand> {
@@ -20,7 +27,14 @@ public class AuthenticateCommandProcessor extends AbstractServerCommandProcessor
 		}
 
 		aConnection.setAuthenticated(true);
-		return null;
+		
+		UserServiceImpl userService = UserServiceImpl.getInstance();
+		Set<User> clients = userService.getAllUsers();
+		ServerInfoServiceImpl serverInfoService = ServerInfoServiceImpl.getInstance();
+		Set<ServerInfo> servers = serverInfoService.getAllServersInfo();
+		
+		AuthenticationSuccessCommand authenticationSuccessCommand = new AuthenticationSuccessCommand(clients, servers);
+		return authenticationSuccessCommand;
 	}
 
 }

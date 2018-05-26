@@ -10,11 +10,12 @@ public class ServerAnnounceCommandBuilderImpl implements CommandBuilder<ServerAn
 	@Override
 	public ServerAnnounceCommand buildCommandObject(JSONObject jsonObject) {
 		String id = (String) jsonObject.get("id");
+		String secret = (String) jsonObject.get("secret");
 		String hostname = (String) jsonObject.get("hostname");
 		Long port = (Long) jsonObject.get("port");
 		Long load = (Long) jsonObject.get("load");
 
-		ServerAnnounceCommand aCommand = new ServerAnnounceCommand(id, load.intValue(), hostname, port.intValue());
+		ServerAnnounceCommand aCommand = new ServerAnnounceCommand(id, secret, load.intValue(), hostname, port.intValue());
 		return aCommand;
 	}
 
