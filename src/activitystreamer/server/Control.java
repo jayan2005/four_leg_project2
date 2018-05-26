@@ -329,12 +329,12 @@ public class Control extends Thread {
 		List<Connection> serverConnections = getServerConnections();
 		
 		if(serverConnections.size() > 0) {
-			ServerQuitCommand serverQuitCommand = new ServerQuitCommand(Settings.getSelfSecret());
+			ServerQuitCommand serverQuitCommand = new ServerQuitCommand(Settings.getSelfId());
 			
 			for(Connection con : serverConnections) {
 				log.info("Closing server connection : " + con);
 				control.getInstance().sendCommandOnce(con, serverQuitCommand);
-				con.closeCon(); // closing socket connection with the server
+				//con.closeCon(); // closing socket connection with the server
 			}
 		}
 		
