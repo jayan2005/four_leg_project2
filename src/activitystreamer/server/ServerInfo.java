@@ -48,5 +48,19 @@ public class ServerInfo {
 		this.secret = secret;
 	}
 	
+	@Override
+	public int hashCode() {
+		return 31*id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof ServerInfo) {
+			ServerInfo newServer = (ServerInfo)obj;
+			return id.equals(newServer.getId());
+		}
+		return false;
+	}
+	
 
 }

@@ -17,5 +17,19 @@ public class User {
 	public String getSecret() {
 		return secret;
 	}
+	
+	@Override
+	public int hashCode() {
+		return 31*username.hashCode()*secret.hashCode();
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof User) {
+			User newUser = (User)obj;
+			return username.equals(newUser.getUsername());
+		}
+		return false;
+	}
+	
 }
