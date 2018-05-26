@@ -30,34 +30,17 @@ public class ServerQuitCommandProcessor extends AbstractServerCommandProcessor<S
 		
 		// remove server id from the list of servers
 		ServerInfoServiceImpl serverInfoServiceImpl = ServerInfoServiceImpl.getInstance();
-		serverInfoServiceImpl.removeServer(command.getId()); //removing server from the list
+		ServerInfo serverInfo = serverInfoServiceImpl.getServerInfo(command.getId());
+		if (serverInfo != null) {
+			serverInfoServiceImpl.removeServer(serverInfo); //removing server from the list
+		}
 		
 		log.info("Server list after removing : " +  serverInfoServiceImpl.getAllServersInfo());
 		
-		reconnect(serverInfoServiceImpl);
+		Control.getInstance().reconnectToAnotherHealthyServer();
 		
 		return null;
 	}
 
-	private void reconnect(ServerInfoServiceImpl serverInfoServiceImpl) {
-		// reconnect to another available server in the list
-		for(ServerInfo server : serverInfoServiceImpl.getAllServersInfo()) {
-			
-			//check if server online
-			Settings.setRemoteHostname(server.getHostname());
-			Settings.setRemotePort(server.getPort());
-			Settings.setSecret(server.getSecret());
-			
-			// Check connection and auhtenticate connection
-			try {
-				Connection con = Control.getInstance().initiateConnection();
-				if(con.isAuthenticated()) {
-					break; // break loop once authentication is success
-				}
-			} catch (IOException e) {
-				log.error("Server connection error :" + e);
-				continue;
-			}
-		}
-	}
+	
 }

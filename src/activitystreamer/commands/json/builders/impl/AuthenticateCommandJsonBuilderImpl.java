@@ -10,6 +10,7 @@ public class AuthenticateCommandJsonBuilderImpl extends AbstractCommandJsonBuild
 	@Override
 	public void populateJsonObject(JSONObject jsonObject, AuthenticateCommand aCommand) {
 		jsonObject.put("secret", aCommand.getSecret());
+		jsonObject.put("serverId", aCommand.getServerId());
 	}
 
 }

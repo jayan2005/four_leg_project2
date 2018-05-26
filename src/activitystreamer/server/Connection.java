@@ -10,6 +10,7 @@ import java.net.Socket;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.omg.PortableInterceptor.ServerIdHelper;
 
 import activitystreamer.util.Settings;
 
@@ -25,6 +26,7 @@ public class Connection extends Thread {
 	private boolean loggedin;
 	private boolean authenticated;
 	private User user;
+	private String serverId;
 	private boolean shouldClose;
 	private long startTime;
 
@@ -123,6 +125,14 @@ public class Connection extends Thread {
 
 	public long getStartTime() {
 		return startTime;
+	}
+
+	public String getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(String serverId) {
+		this.serverId = serverId;
 	}
 	
 }

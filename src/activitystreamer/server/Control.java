@@ -89,9 +89,8 @@ public class Control extends Thread {
 
 	private void authenticateWithRemoteServer(Connection remoteServerConnection) {
 		if (StringUtils.isNotBlank(Settings.getRemoteHostname()) && StringUtils.isNotBlank(Settings.getSecret())) {
-			AuthenticateCommand authenticateCommand = new AuthenticateCommand(Settings.getSecret());
+			AuthenticateCommand authenticateCommand = new AuthenticateCommand(Settings.getSelfId(),Settings.getSecret());
 			sendCommand(remoteServerConnection, authenticateCommand);
-
 			remoteServerConnection.setAuthenticated(true); // If the authentication fails, this flag will be reset by
 															// the command processor
 		}
@@ -177,8 +176,17 @@ public class Control extends Thread {
 	 * The connection has been closed by the other party.
 	 */
 	public synchronized void connectionClosed(Connection con) {
-		if (!term)
+		if (!term) {
+			if (con.isAuthenticated()) {
+				ServerInfoServiceImpl serverInfoServiceImpl = ServerInfoServiceImpl.getInstance();
+				ServerInfo serverInfo = serverInfoServiceImpl.getServerInfo(con.getServerId());
+				if (serverInfo != null) {
+					serverInfoServiceImpl.removeServer(serverInfo); //removing server from the list
+				}
+				reconnectToAnotherHealthyServer();
+			}
 			connections.remove(con);
+		}	
 	}
 
 	/*
@@ -202,6 +210,29 @@ public class Control extends Thread {
 		Connection c = new Connection(s);
 		connections.add(c);
 		return c;
+	}
+	
+	public void reconnectToAnotherHealthyServer() {
+		
+		ServerInfoServiceImpl serverInfoServiceImpl = ServerInfoServiceImpl.getInstance();
+		for(ServerInfo server : serverInfoServiceImpl.getAllServersInfo()) {
+			
+			//check if server online
+			Settings.setRemoteHostname(server.getHostname());
+			Settings.setRemotePort(server.getPort());
+			Settings.setSecret(server.getSecret());
+			
+			// Check connection and auhtenticate connection
+			try {
+				Connection con = Control.getInstance().initiateConnection();
+				if(con.isAuthenticated()) {
+					break; // break loop once authentication is success
+				}
+			} catch (IOException e) {
+				log.error("Server connection error :" + e);
+				continue;
+			}
+		}
 	}
 
 	@Override

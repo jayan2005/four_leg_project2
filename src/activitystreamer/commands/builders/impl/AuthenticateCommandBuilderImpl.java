@@ -10,8 +10,9 @@ public class AuthenticateCommandBuilderImpl implements CommandBuilder<Authentica
 	@Override
 	public AuthenticateCommand buildCommandObject(JSONObject jsonObject) {
 		String secret = (String) jsonObject.get("secret");
+		String serverId = (String) jsonObject.get("serverId");
 
-		AuthenticateCommand authenticateCommand = new AuthenticateCommand(secret);
+		AuthenticateCommand authenticateCommand = new AuthenticateCommand(serverId,secret);
 		return authenticateCommand;
 	}
 

@@ -27,6 +27,7 @@ public class AuthenticateCommandProcessor extends AbstractServerCommandProcessor
 		}
 
 		aConnection.setAuthenticated(true);
+		aConnection.setServerId(command.getServerId());
 		
 		UserServiceImpl userService = UserServiceImpl.getInstance();
 		Set<User> clients = userService.getAllUsers();

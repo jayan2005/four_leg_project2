@@ -5,11 +5,13 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import activitystreamer.util.Settings;
+
 public class ServerInfoServiceImpl implements ServerInfoService {
 
 	private static final Logger log = LogManager.getLogger();
 	private static ServerInfoServiceImpl instance;
-	private static Set<ServerInfo> servers;
+	private Set<ServerInfo> servers;
 
 	private ServerInfoServiceImpl() {
 		servers = new HashSet<ServerInfo>();
@@ -42,6 +44,11 @@ public class ServerInfoServiceImpl implements ServerInfoService {
 
 	@Override
 	public ServerInfo addServerInfo(String id, String secret, String hostname, int port, int load) {
+		
+		if (id != null && Settings.getSelfId().equals(id)) {
+			return null;
+		}
+		
 		ServerInfo serverInfo = new ServerInfo();
 		serverInfo.setId(id);
 		serverInfo.setLoad(load);
@@ -64,19 +71,11 @@ public class ServerInfoServiceImpl implements ServerInfoService {
 	}
 	
 	// Removing shutting down server from the server list
-	public boolean removeServer(String id) {
-		
-		log.info("removing the server shutting down from the list");
-		log.info("Server ID of the command : " + id);
-
-		ServerInfo shuttingDownServer = getServerInfo(id);
-		
-		if(servers !=null && servers.contains(shuttingDownServer.getId())) {
-			servers.remove(shuttingDownServer.getId());
-			log.info("Server ID " + shuttingDownServer.getId() + " removed from the list");
-			return true;
+	public boolean removeServer(ServerInfo serverInfo) {
+		try {
+			return servers.remove(serverInfo);
+		} catch(Exception e) {
+			return false;
 		}
-		return false;
-		
 	}
 }
