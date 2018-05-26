@@ -4,26 +4,14 @@ import activitystreamer.command.Command;
 
 public class ServerQuitCommand extends AbstractCommand {
 	
-	private String hostname;
-	private int port;
-	private String secret;
+	private String id;
 
-	public ServerQuitCommand(String hostname, int port, String secret) {
+	public ServerQuitCommand(String id) {
 		super(Command.Names.SERVER_QUIT.toString());
-		this.hostname = hostname;
-		this.port = port;
-		this.secret = secret;
+		this.id = id;
 	}
 	
-	public String getSecret() {
-		return secret;
-	}
-
-	public String getHostname() {
-		return hostname;
-	}
-
-	public int getPort() {
-		return port;
+	public String getId() {
+		return this.id;
 	}
 }

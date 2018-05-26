@@ -284,29 +284,37 @@ public class Control extends Thread {
 	}
 	
 	public void shutdownGracefully() {
+		log.info("Server Shutting down gracefully...");
 		
 		//get all server connections
 		List<Connection> serverConnections = getServerConnections();
-		ServerQuitCommand serverQuitCommand = new ServerQuitCommand(Settings.getLocalHostname(), Settings.getLocalPort(), Settings.getSecret());
 		
-		for(Connection con : serverConnections) {
-			control.getInstance().sendCommandOnce(con, serverQuitCommand);
-			con.closeCon(); // closing socket connection with the server
+		if(serverConnections.size() > 0) {
+			ServerQuitCommand serverQuitCommand = new ServerQuitCommand(Settings.getSelfSecret());
+			
+			for(Connection con : serverConnections) {
+				log.info("Closing server connection : " + con);
+				control.getInstance().sendCommandOnce(con, serverQuitCommand);
+				con.closeCon(); // closing socket connection with the server
+			}
 		}
 		
 		//get all the client connections
 		List<Connection> clientConnections = getClientConnections();
 		
-		//prepare redirect command for client
-		// TO-DO list
-			// should check whether the remote server is online.
-			// should look in the server list and assign a server 
-		RedirectCommand clientRedirectCommand = new RedirectCommand(Settings.getRemoteHostname(), Settings.getRemotePort());  
-		
-		//send redirect command to clients
-		for(Connection con : clientConnections) {
-			control.getInstance().sendCommandOnce(con, clientRedirectCommand);
-			con.closeCon(); // closing socket connection on the client
+		if(clientConnections.size() > 0) {
+			//prepare redirect command for client
+			// TO-DO list
+				// should check whether the remote server is online.
+				// should look in the server list and assign a server 
+			RedirectCommand clientRedirectCommand = new RedirectCommand(Settings.getRemoteHostname(), Settings.getRemotePort());  
+			
+			//send redirect command to clients
+			for(Connection con : clientConnections) {
+				log.info("Closing client connection : " + con);
+				control.getInstance().sendCommandOnce(con, clientRedirectCommand);
+				con.closeCon(); // closing socket connection on the client
+			}
 		}
 		
 	}
