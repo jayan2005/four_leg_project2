@@ -36,6 +36,7 @@ public class AuthenticationSuccessCommandJsonBuilderImpl extends AbstractCommand
 			serverArray.add(serverObj);
 		}
 		jsonObject.put("servers", serverArray);
+		jsonObject.put("serverId", aCommand.getServerId());
 		
 	}
 

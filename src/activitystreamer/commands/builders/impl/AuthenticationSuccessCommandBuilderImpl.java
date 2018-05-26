@@ -18,6 +18,7 @@ public class AuthenticationSuccessCommandBuilderImpl implements CommandBuilder<A
 	public AuthenticationSuccessCommand buildCommandObject(JSONObject jsonObject) {
 		JSONArray clientArray = (JSONArray) jsonObject.get("clients");
 		JSONArray serverArray = (JSONArray) jsonObject.get("servers");
+		String serverId = (String) jsonObject.get("serverId");
 		
 		Set<User> clients = new HashSet<>();
 		Iterator<JSONObject> iterator = clientArray.iterator();
@@ -43,7 +44,7 @@ public class AuthenticationSuccessCommandBuilderImpl implements CommandBuilder<A
         	servers.add(aServer);
         }
 
-		AuthenticationSuccessCommand authenticationSuccessCommand = new AuthenticationSuccessCommand(clients,servers);
+		AuthenticationSuccessCommand authenticationSuccessCommand = new AuthenticationSuccessCommand(serverId,clients,servers);
 		return authenticationSuccessCommand;
 	}
 

@@ -34,7 +34,7 @@ public class AuthenticateCommandProcessor extends AbstractServerCommandProcessor
 		ServerInfoServiceImpl serverInfoService = ServerInfoServiceImpl.getInstance();
 		Set<ServerInfo> servers = serverInfoService.getAllServersInfo();
 		
-		AuthenticationSuccessCommand authenticationSuccessCommand = new AuthenticationSuccessCommand(clients, servers);
+		AuthenticationSuccessCommand authenticationSuccessCommand = new AuthenticationSuccessCommand(Settings.getSelfId(),clients, servers);
 		return authenticationSuccessCommand;
 	}
 

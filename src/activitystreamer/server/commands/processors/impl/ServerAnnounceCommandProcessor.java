@@ -8,6 +8,7 @@ import activitystreamer.server.Connection;
 import activitystreamer.server.Control;
 import activitystreamer.server.ServerInfo;
 import activitystreamer.server.ServerInfoServiceImpl;
+import activitystreamer.util.Settings;
 
 public class ServerAnnounceCommandProcessor extends AbstractServerCommandProcessor<ServerAnnounceCommand> {
 
@@ -19,6 +20,10 @@ public class ServerAnnounceCommandProcessor extends AbstractServerCommandProcess
 					"Server is not yet authenticated. Authenticate first with valid secret");
 		}
 
+		if (command.getId().equals(Settings.getSelfId())) {
+			return null;
+		}
+		
 		ServerInfoServiceImpl serverInfoServiceImpl = ServerInfoServiceImpl.getInstance();
 		ServerInfo serverInfo = serverInfoServiceImpl.getServerInfo(command.getId());
 

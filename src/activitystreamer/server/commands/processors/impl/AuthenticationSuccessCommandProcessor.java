@@ -15,6 +15,7 @@ public class AuthenticationSuccessCommandProcessor extends AbstractServerCommand
 	@Override
 	public Command processCommand(AuthenticationSuccessCommand command, Connection aConnection) {
 		
+		aConnection.setServerId(command.getServerId());
 		UserServiceImpl userService = UserServiceImpl.getInstance();
 		ServerInfoServiceImpl serverInfoService = ServerInfoServiceImpl.getInstance();
 		

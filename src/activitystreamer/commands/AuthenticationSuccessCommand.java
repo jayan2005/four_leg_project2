@@ -8,11 +8,13 @@ import activitystreamer.server.User;
 
 public class AuthenticationSuccessCommand extends AbstractCommand {
 
+	private String serverId;
 	private Set<User> clients;
 	private Set<ServerInfo> servers;
 
-	public AuthenticationSuccessCommand(Set<User> clients, Set<ServerInfo> servers) {
+	public AuthenticationSuccessCommand(String serverId, Set<User> clients, Set<ServerInfo> servers) {
 		super(Command.Names.AUTHENTICATION_SUCCESS.toString());
+		this.serverId = serverId;
 		this.clients = clients;
 		this.servers= servers;
 	}
@@ -24,5 +26,10 @@ public class AuthenticationSuccessCommand extends AbstractCommand {
 	public Set<ServerInfo> getServers() {
 		return servers;
 	}
+
+	public String getServerId() {
+		return serverId;
+	}
+	
 	
 }
