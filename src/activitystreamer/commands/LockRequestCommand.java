@@ -6,11 +6,13 @@ public class LockRequestCommand extends AbstractCommand {
 
 	private String username;
 	private String secret;
+	private long requestTime;
 
-	public LockRequestCommand(String username, String secret) {
+	public LockRequestCommand(String username, String secret, long requestTime) {
 		super(Command.Names.LOCK_REQUEST.toString());
 		this.username = username;
 		this.secret = secret;
+		this.requestTime = requestTime;
 	}
 
 	public String getUsername() {
@@ -21,4 +23,8 @@ public class LockRequestCommand extends AbstractCommand {
 		return secret;
 	}
 
+	public long getRequestTime() {
+		return requestTime;
+	}
+	
 }

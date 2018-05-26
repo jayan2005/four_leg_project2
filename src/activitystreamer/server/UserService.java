@@ -13,5 +13,5 @@ public interface UserService {
 	boolean login(String username, String secret);
 	
 	Set<User> getAllUsers();
-
+	
 }

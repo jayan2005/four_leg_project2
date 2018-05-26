@@ -82,10 +82,8 @@ public abstract class AbstractServerCommandProcessor<T extends Command> implemen
 		return serverSent;
 	}
 
-	protected Boolean broadcastAndProcessLockRequest(String username, String secret, boolean allServers,
+	protected Boolean broadcastAndProcessLockRequest(LockRequestCommand lockRequestCommand, boolean allServers,
 			Connection aConnection) {
-		// Broadcast Lock Request
-		LockRequestCommand lockRequestCommand = new LockRequestCommand(username, secret);
 		int noOfServersSent = 0;
 		if (allServers) {
 			noOfServersSent = broadcastToAllServers(lockRequestCommand);
@@ -94,7 +92,7 @@ public abstract class AbstractServerCommandProcessor<T extends Command> implemen
 		}
 
 		// Collect Lock responses via Future
-		LockResponseListener lockResponseListener = new LockResponseListener(username, noOfServersSent);
+		LockResponseListener lockResponseListener = new LockResponseListener(lockRequestCommand.getUsername(), noOfServersSent);
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		Future<Boolean> result = executorService.submit(lockResponseListener);
 
