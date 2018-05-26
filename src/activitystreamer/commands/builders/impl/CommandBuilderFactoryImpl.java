@@ -35,6 +35,7 @@ public class CommandBuilderFactoryImpl implements CommandBuilderFactory {
 		builders.put(Command.Names.ACTIVITY_BROADCAST.toString(), new ActivityBroadcastCommandBuilderImpl());
 
 		builders.put(Command.Names.AUTHENTICATE.toString(), new AuthenticateCommandBuilderImpl());
+		builders.put(Command.Names.AUTHENTICATION_SUCCESS.toString(), new AuthenticationSuccessCommandBuilderImpl());
 		builders.put(Command.Names.AUTHENTICATION_FAIL.toString(), new AuthenticationFailCommandBuilderImpl());
 
 		builders.put(Command.Names.INVALID_MESSAGE.toString(), new InvalidMessageCommandBuilderImpl());

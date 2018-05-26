@@ -11,6 +11,7 @@ public class ServerAnnounceCommandJsonBuilderImpl extends AbstractCommandJsonBui
 	public void populateJsonObject(JSONObject jsonObject, ServerAnnounceCommand aCommand) {
 		jsonObject.put("id", aCommand.getId());
 		jsonObject.put("hostname", aCommand.getHostname());
+		jsonObject.put("secret", aCommand.getSecret());
 		jsonObject.put("port", aCommand.getPort());
 		jsonObject.put("load", aCommand.getLoad());
 	}

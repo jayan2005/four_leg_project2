@@ -32,6 +32,7 @@ public class CommandJsonBuilderFactoryImpl implements CommandJsonBuilderFactory 
 		builders.put(Command.Names.ACTIVITY_BROADCAST.toString(), new ActivityBroadcastCommandJsonBuilderImpl());
 
 		builders.put(Command.Names.AUTHENTICATE.toString(), new AuthenticateCommandJsonBuilderImpl());
+		builders.put(Command.Names.AUTHENTICATION_SUCCESS.toString(), new AuthenticationSuccessCommandJsonBuilderImpl());
 		builders.put(Command.Names.AUTHENTICATION_FAIL.toString(), new AuthenticationFailCommandJsonBuilderImpl());
 
 		builders.put(Command.Names.SERVER_ANNOUNCE.toString(), new ServerAnnounceCommandJsonBuilderImpl());

@@ -56,6 +56,7 @@ public class Control extends Thread {
 		lockResponseListeners = new HashMap<String, LockResponseListener>();
 
 		Settings.setSelfSecret(Settings.nextSecret());
+		log.info("The chosen id is " + Settings.getSelfId());
 		log.info("The chosen secret is " + Settings.getSelfSecret());
 
 		// start a listener
@@ -230,12 +231,13 @@ public class Control extends Thread {
 			return false;
 		}
 
-		String id = Settings.getSelfSecret();
+		String selfId = Settings.getSelfId(); 
+		String selfSecret = Settings.getSelfSecret();
 		String hostname = Settings.getLocalHostname();
 		int port = Settings.getLocalPort();
 		int load = getClientConnections().size();
 
-		ServerAnnounceCommand serverAnnounceCommand = new ServerAnnounceCommand(id, load, hostname, port);
+		ServerAnnounceCommand serverAnnounceCommand = new ServerAnnounceCommand(selfId, selfSecret, load, hostname, port);
 		for (Connection con : serverConnections) {
 			Control.getInstance().sendCommandOnce(con, serverAnnounceCommand);
 		}

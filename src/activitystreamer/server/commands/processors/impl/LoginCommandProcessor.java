@@ -1,6 +1,6 @@
 package activitystreamer.server.commands.processors.impl;
 
-import java.util.List;
+import java.util.Set;
 
 import activitystreamer.command.Command;
 import activitystreamer.commands.LoginCommand;
@@ -49,7 +49,7 @@ public class LoginCommandProcessor extends AbstractServerCommandProcessor<LoginC
 	}
 
 	public RedirectCommand checkForRedirect() {
-		List<ServerInfo> servers = ServerInfoServiceImpl.getInstance().getAllServersInfo();
+		Set<ServerInfo> servers = ServerInfoServiceImpl.getInstance().getAllServersInfo();
 		int currentConnections = Control.getInstance().getClientConnections().size();
 		for (ServerInfo serverInfo : servers) {
 			if ((serverInfo.getLoad() + 2) < currentConnections) {
