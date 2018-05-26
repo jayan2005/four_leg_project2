@@ -11,6 +11,6 @@ public class ServerQuitCommandJsonBuilderImpl extends AbstractCommandJsonBuilder
 	public void populateJsonObject(JSONObject jsonObject, ServerQuitCommand aCommand) {
 		jsonObject.put("hostname", aCommand.getHostname());
 		jsonObject.put("port", aCommand.getPort());
-		jsonObject.put("status", aCommand.getStatus());
+		jsonObject.put("serect", aCommand.getSecret());
 	}
 }
