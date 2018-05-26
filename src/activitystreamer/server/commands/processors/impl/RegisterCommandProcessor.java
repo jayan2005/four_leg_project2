@@ -1,6 +1,7 @@
 package activitystreamer.server.commands.processors.impl;
 
 import activitystreamer.command.Command;
+import activitystreamer.commands.LockRequestCommand;
 import activitystreamer.commands.RegisterCommand;
 import activitystreamer.server.Connection;
 import activitystreamer.server.Control;
@@ -11,8 +12,9 @@ public class RegisterCommandProcessor extends AbstractServerCommandProcessor<Reg
 
 	@Override
 	public synchronized Command processCommand(RegisterCommand command, Connection aConnection) {
+		long registerRequestTime = System.nanoTime();
 		boolean registerSuccess = false;
-
+		
 		if (aConnection.isLoggedin()) {
 			aConnection.setShouldClose(true);
 			return prepareInvalidMessageCommand("Cannot Register.Already logged in");
@@ -30,7 +32,8 @@ public class RegisterCommandProcessor extends AbstractServerCommandProcessor<Reg
 		if (noOfServers == 0) {
 			registerSuccess = UserServiceImpl.getInstance().register(command.getUsername(), command.getSecret());
 		} else {
-			registerSuccess = broadcastAndProcessLockRequest(command.getUsername(), command.getSecret(), true,
+			LockRequestCommand lockRequestCommand = new LockRequestCommand(command.getUsername(), command.getSecret(), registerRequestTime);
+			registerSuccess = broadcastAndProcessLockRequest(lockRequestCommand, true,
 					aConnection);
 		}
 

@@ -9,6 +9,7 @@ public class UserServiceImpl implements UserService {
 
 	private static UserServiceImpl instance;
 	private Map<String, User> users;
+	private UserRegistration userRegistration; 
 
 	private UserServiceImpl() {
 		users = new HashMap<String, User>();
@@ -22,7 +23,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean register(String username, String secret) {
+	public synchronized boolean register(String username, String secret) {
+		
 		if (users.containsKey(username)) {
 			return false;
 		}
@@ -30,6 +32,19 @@ public class UserServiceImpl implements UserService {
 		User newUser = new User(username, secret);
 		users.put(username, newUser);
 		return true;
+	}
+	
+	public synchronized UserRegistration initiateUserRegistration(String username, String secret) {
+		userRegistration = new UserRegistration(username, secret);
+		return userRegistration;
+	}
+	
+	public synchronized void resetUserRegistration() {
+		userRegistration = null;
+	}
+	
+	public UserRegistration getUserRegistrationInProgress() {
+		return userRegistration;
 	}
 
 	@Override

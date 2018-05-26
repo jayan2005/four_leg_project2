@@ -11,8 +11,9 @@ public class LockRequestCommandBuilderImpl implements CommandBuilder<LockRequest
 	public LockRequestCommand buildCommandObject(JSONObject jsonObject) {
 		String username = (String) jsonObject.get("username");
 		String secret = (String) jsonObject.get("secret");
+		long requestTime = (long) jsonObject.get("requestTime");
 
-		LockRequestCommand lockRequestCommand = new LockRequestCommand(username, secret);
+		LockRequestCommand lockRequestCommand = new LockRequestCommand(username, secret,requestTime);
 		return lockRequestCommand;
 	}
 

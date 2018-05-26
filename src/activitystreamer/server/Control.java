@@ -70,19 +70,21 @@ public class Control extends Thread {
 		}
 	}
 
-	public void initiateConnection() {
+	public Connection initiateConnection() throws IOException {
 		// make a connection to another server if remote hostname is supplied
 		if (Settings.getRemoteHostname() != null) {
 			try {
 				Connection remoteServerConnection = outgoingConnection(
 						new Socket(Settings.getRemoteHostname(), Settings.getRemotePort()));
 				authenticateWithRemoteServer(remoteServerConnection);
+				return remoteServerConnection;
 			} catch (IOException e) {
 				log.error("failed to make connection to " + Settings.getRemoteHostname() + ":"
 						+ Settings.getRemotePort() + " :" + e);
-				System.exit(-1);
+				throw e;
 			}
 		}
+		return null;
 	}
 
 	private void authenticateWithRemoteServer(Connection remoteServerConnection) {
@@ -283,6 +285,10 @@ public class Control extends Thread {
 	public void publishLockResponse(String username, boolean allowLock) {
 		LockResponseListener listener = lockResponseListeners.get(username);
 		listener.processResponse(allowLock);
+	}
+	
+	public LockResponseListener getLockResponseListener(String username) {
+		return lockResponseListeners.get(username);
 	}
 	
 	public void shutdownGracefully() {
