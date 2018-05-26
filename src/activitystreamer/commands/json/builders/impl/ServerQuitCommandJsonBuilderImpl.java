@@ -9,8 +9,6 @@ public class ServerQuitCommandJsonBuilderImpl extends AbstractCommandJsonBuilder
 	@SuppressWarnings("unchecked")
 	@Override
 	public void populateJsonObject(JSONObject jsonObject, ServerQuitCommand aCommand) {
-		jsonObject.put("hostname", aCommand.getHostname());
-		jsonObject.put("port", aCommand.getPort());
-		jsonObject.put("serect", aCommand.getSecret());
+		jsonObject.put("id", aCommand.getId());
 	}
 }

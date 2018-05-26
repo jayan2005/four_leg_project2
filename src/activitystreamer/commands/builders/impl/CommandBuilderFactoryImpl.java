@@ -40,6 +40,7 @@ public class CommandBuilderFactoryImpl implements CommandBuilderFactory {
 
 		builders.put(Command.Names.INVALID_MESSAGE.toString(), new InvalidMessageCommandBuilderImpl());
 		builders.put(Command.Names.SERVER_ANNOUNCE.toString(), new ServerAnnounceCommandBuilderImpl());
+		builders.put(Command.Names.SERVER_QUIT.toString(), new ServerQuitCommandBuilderImpl());
 
 		builders.put(Command.Names.LOCK_REQUEST.toString(), new LockRequestCommandBuilderImpl());
 		builders.put(Command.Names.LOCK_ALLOWED.toString(), new LockAllowedCommandBuilderImpl());
