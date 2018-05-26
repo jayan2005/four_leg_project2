@@ -289,7 +289,7 @@ public class Control extends Thread {
 		
 		//get all server connections
 		List<Connection> serverConnections = getServerConnections();
-		ServerQuitCommand serverQuitCommand = new ServerQuitCommand(Settings.getLocalHostname(), Settings.getLocalPort(), true);
+		ServerQuitCommand serverQuitCommand = new ServerQuitCommand(Settings.getLocalHostname(), Settings.getLocalPort(), Settings.getSecret());
 		
 		for(Connection con : serverConnections) {
 			control.getInstance().sendCommandOnce(con, serverQuitCommand);

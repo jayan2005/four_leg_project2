@@ -6,17 +6,17 @@ public class ServerQuitCommand extends AbstractCommand {
 	
 	private String hostname;
 	private int port;
-	private boolean status;
+	private String secret;
 
-	public ServerQuitCommand(String hostname, int port, boolean status) {
+	public ServerQuitCommand(String hostname, int port, String secret) {
 		super(Command.Names.SERVER_QUIT.toString());
 		this.hostname = hostname;
 		this.port = port;
-		this.status = status;
+		this.secret = secret;
 	}
 	
-	public boolean getStatus() {
-		return status;
+	public String getSecret() {
+		return secret;
 	}
 
 	public String getHostname() {
