@@ -26,6 +26,7 @@ public class Connection extends Thread {
 	private boolean authenticated;
 	private User user;
 	private boolean shouldClose;
+	private long startTime;
 
 	Connection(Socket socket) throws IOException {
 		in = new DataInputStream(socket.getInputStream());
@@ -33,6 +34,7 @@ public class Connection extends Thread {
 		inreader = new BufferedReader(new InputStreamReader(in));
 		outwriter = new PrintWriter(out, true);
 		this.socket = socket;
+		this.startTime = System.nanoTime();
 		open = true;
 		start();
 	}
@@ -119,4 +121,8 @@ public class Connection extends Thread {
 		this.shouldClose = shouldClose;
 	}
 
+	public long getStartTime() {
+		return startTime;
+	}
+	
 }

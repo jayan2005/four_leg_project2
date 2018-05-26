@@ -10,7 +10,13 @@ import activitystreamer.server.Control;
 import activitystreamer.server.User;
 
 public class ActivityMessageCommandProcessor extends AbstractServerCommandProcessor<ActivityMessageCommand> {
-
+	
+	private long messageId;
+	
+	private synchronized long nextMessageId() {
+		return messageId++;
+	}
+	
 	@Override
 	public Command processCommand(ActivityMessageCommand command, Connection aConnection) {
 		boolean allowBroadcast = false;
@@ -34,7 +40,7 @@ public class ActivityMessageCommandProcessor extends AbstractServerCommandProces
 
 		if (allowBroadcast) {
 			ActivityBroadcastCommand broadcastCommand = prepareActivityBroadcast(command.getActivity(),
-					command.getUsername());
+					command.getUsername(), nextMessageId());
 
 			List<Connection> serverConnections = Control.getInstance().getServerConnections();
 			for (Connection con : serverConnections) {

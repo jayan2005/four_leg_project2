@@ -20,6 +20,7 @@ import activitystreamer.commands.RegisterSuccessCommand;
 import activitystreamer.server.Connection;
 import activitystreamer.server.Control;
 import activitystreamer.server.commands.processor.CommandProcessor;
+import activitystreamer.util.Settings;
 
 public abstract class AbstractServerCommandProcessor<T extends Command> implements CommandProcessor<T> {
 
@@ -54,9 +55,9 @@ public abstract class AbstractServerCommandProcessor<T extends Command> implemen
 	}
 
 	@SuppressWarnings("unchecked")
-	protected ActivityBroadcastCommand prepareActivityBroadcast(JSONObject jsonObject, String username) {
+	protected ActivityBroadcastCommand prepareActivityBroadcast(JSONObject jsonObject, String username, long messageId) {
 		jsonObject.put("authenticated_user", username);
-		ActivityBroadcastCommand activityBroadcastCommand = new ActivityBroadcastCommand(jsonObject);
+		ActivityBroadcastCommand activityBroadcastCommand = new ActivityBroadcastCommand(jsonObject,Settings.getSelfId(),messageId,System.nanoTime());
 		return activityBroadcastCommand;
 	}
 

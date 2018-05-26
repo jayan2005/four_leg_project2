@@ -22,7 +22,7 @@ public class LockResponseListener implements Callable<Boolean> {
 		// listen for Lock responses
 		while (!abort) {
 			if (responseReceived < noOfServers) {
-				continue;
+				Thread.sleep(1000);;
 			} else {
 				break;
 			}

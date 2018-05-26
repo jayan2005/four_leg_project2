@@ -23,7 +23,7 @@ public class LockRequestCommandProcessor extends AbstractServerCommandProcessor<
 		Command resultCommand = null;
 		UserRegistration userRegistration = UserServiceImpl.getInstance().getUserRegistrationInProgress();
 
-		if (userRegistration != null) {
+		if (userRegistration != null && userRegistration.getUserName().equals(command.getUsername())) {
 			if (userRegistration.getRequestTime() < command.getRequestTime()) {
 				// Send Lock Denied as the Registration in progress is earlier than the lock
 				// request

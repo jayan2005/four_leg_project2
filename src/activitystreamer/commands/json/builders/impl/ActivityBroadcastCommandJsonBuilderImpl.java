@@ -10,6 +10,9 @@ public class ActivityBroadcastCommandJsonBuilderImpl extends AbstractCommandJson
 	@Override
 	public void populateJsonObject(JSONObject jsonObject, ActivityBroadcastCommand aCommand) {
 		jsonObject.put("activity", aCommand.getActivity());
+		jsonObject.put("serverId", aCommand.getServerId());
+		jsonObject.put("seqNo", aCommand.getMessageId());
+		jsonObject.put("timestamp", aCommand.getMessageTime());
 	}
 
 }

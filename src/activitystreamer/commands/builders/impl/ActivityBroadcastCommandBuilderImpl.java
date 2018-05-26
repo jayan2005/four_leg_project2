@@ -10,8 +10,11 @@ public class ActivityBroadcastCommandBuilderImpl implements CommandBuilder<Activ
 	@Override
 	public ActivityBroadcastCommand buildCommandObject(JSONObject jsonObject) {
 		JSONObject activity = (JSONObject) jsonObject.get("activity");
-
-		ActivityBroadcastCommand activityBroadcastCommand = new ActivityBroadcastCommand(activity);
+		String serverId = (String) jsonObject.get("serverId");
+		long messageId = (long) jsonObject.get("seqNo");
+		long messageTime = (long) jsonObject.get("timestamp");
+		
+		ActivityBroadcastCommand activityBroadcastCommand = new ActivityBroadcastCommand(activity,serverId,messageId,messageTime);
 		return activityBroadcastCommand;
 	}
 

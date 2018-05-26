@@ -28,6 +28,7 @@ public class RegisterCommandProcessor extends AbstractServerCommandProcessor<Reg
 			return prepareRegisterFailedCommand(command.getUsername() + " is already registered with the system");
 		}
 
+		UserServiceImpl.getInstance().initiateUserRegistration(command.getUsername(), command.getSecret());
 		int noOfServers = Control.getInstance().getServerConnections().size();
 		if (noOfServers == 0) {
 			registerSuccess = UserServiceImpl.getInstance().register(command.getUsername(), command.getSecret());
@@ -37,6 +38,7 @@ public class RegisterCommandProcessor extends AbstractServerCommandProcessor<Reg
 					aConnection);
 		}
 
+		UserServiceImpl.getInstance().resetUserRegistration();
 		if (registerSuccess) {
 			return prepareRegisterSuccessCommand("register success for " + command.getUsername());
 		} else {

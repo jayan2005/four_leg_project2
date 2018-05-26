@@ -11,6 +11,7 @@ public class LockRequestCommandJsonBuilderImpl extends AbstractCommandJsonBuilde
 	public void populateJsonObject(JSONObject jsonObject, LockRequestCommand aCommand) {
 		jsonObject.put("username", aCommand.getUsername());
 		jsonObject.put("secret", aCommand.getSecret());
+		jsonObject.put("requestTime", aCommand.getRequestTime());
 	}
 
 }
