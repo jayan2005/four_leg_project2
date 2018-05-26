@@ -2,9 +2,12 @@ package activitystreamer.server;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ServerInfoServiceImpl implements ServerInfoService {
 
+	private static final Logger log = LogManager.getLogger();
 	private static ServerInfoServiceImpl instance;
 	private static Set<ServerInfo> servers;
 
@@ -58,5 +61,22 @@ public class ServerInfoServiceImpl implements ServerInfoService {
 	@Override
 	public Set<ServerInfo> getAllServersInfo() {
 		return servers;
+	}
+	
+	// Removing shutting down server from the server list
+	public boolean removeServer(String id) {
+		
+		log.info("removing the server shutting down from the list");
+		log.info("Server ID of the command : " + id);
+
+		ServerInfo shuttingDownServer = getServerInfo(id);
+		
+		if(servers !=null && servers.contains(shuttingDownServer.getId())) {
+			servers.remove(shuttingDownServer.getId());
+			log.info("Server ID " + shuttingDownServer.getId() + " removed from the list");
+			return true;
+		}
+		return false;
+		
 	}
 }

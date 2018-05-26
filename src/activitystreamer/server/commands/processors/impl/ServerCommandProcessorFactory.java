@@ -29,6 +29,7 @@ public class ServerCommandProcessorFactory {
 		processors.put(Names.AUTHENTICATION_FAIL.toString(), new AuthenticationFailCommandProcessor());
 
 		processors.put(Names.SERVER_ANNOUNCE.toString(), new ServerAnnounceCommandProcessor());
+		processors.put(Names.SERVER_QUIT.toString(), new ServerQuitCommandProcessor());
 
 		processors.put(Names.LOCK_REQUEST.toString(), new LockRequestCommandProcessor());
 		processors.put(Names.LOCK_ALLOWED.toString(), new LockAllowedCommandProcessor());
